@@ -55,8 +55,8 @@ async function renderSlot(s: HomeSlot, key: number, ctx: { renderedFeatured: num
             ctaHref: p.cta_href ?? "/collections/all",
           }];
       const slides = rawSlides
-        .filter((sl: any) => typeof sl?.image === "string" && sl.image.length > 0)
-        .map((sl: any) => ({
+        .filter((sl: Record<string, unknown>) => typeof sl?.image === "string" && sl.image.length > 0)
+        .map((sl: Record<string, unknown>) => ({
           image: String(sl.image),
           eyebrow: String(sl.eyebrow ?? ""),
           title: String(sl.title ?? sl.headline ?? ""),
@@ -69,7 +69,7 @@ async function renderSlot(s: HomeSlot, key: number, ctx: { renderedFeatured: num
     }
     case "category-grid": {
       const items = Array.isArray(p.categories)
-        ? p.categories.filter((c: any) => c && typeof c.image === "string" && c.image.length > 0 && c.label && c.href)
+        ? p.categories.filter((c: Record<string, unknown>) => c && typeof c.image === "string" && c.image.length > 0 && c.label && c.href)
         : undefined;
       if (items && items.length === 0) return null;
       return <CategoryGrid key={key} items={items} eyebrow={p.eyebrow} title={p.title} />;

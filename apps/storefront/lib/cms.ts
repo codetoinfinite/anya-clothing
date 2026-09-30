@@ -42,6 +42,7 @@ export type HomeSlot = {
   id: string;
   slot: string;
   position: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- free-form CMS JSON, shape depends on slot
   payload: any;
   enabled: boolean;
 };

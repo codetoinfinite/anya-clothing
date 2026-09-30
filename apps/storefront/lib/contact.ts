@@ -13,7 +13,7 @@ const ContactSchema = z.object({
 
 const EmailSchema = z.string().trim().email("Enter a valid email.").max(160);
 
-async function storePost(path: string, body: unknown): Promise<{ ok: boolean; status: number; data: any }> {
+async function storePost(path: string, body: unknown): Promise<{ ok: boolean; status: number; data: { message?: string } | null }> {
   try {
     const res = await fetch(`${env.medusaUrl}${path}`, {
       method: "POST",

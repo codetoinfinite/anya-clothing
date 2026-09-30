@@ -1,5 +1,5 @@
 import { LegalLayout, H2, RenderLegalBody } from "@/lib/legal";
-import { getPage, bodyToParagraphs } from "@/lib/cms";
+import { getPage } from "@/lib/cms";
 
 export const revalidate = 300;
 
