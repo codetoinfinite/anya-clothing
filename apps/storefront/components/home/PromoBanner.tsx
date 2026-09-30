@@ -3,14 +3,14 @@ import Link from "next/link";
 
 const BANNERS = [
   {
-    image: "https://images.pexels.com/photos/13562538/pexels-photo-13562538.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    image: "/images/pexels-13562538.jpg",
     title: "Wedding guest, sorted.",
     copy: "Hand-finished co-ords and anarkalis for every function.",
     href: "/collections/festive",
     cta: "Shop the edit",
   },
   {
-    image: "https://images.pexels.com/photos/34265189/pexels-photo-34265189.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    image: "/images/pexels-34265189.jpg",
     title: "Soft cottons for everyday.",
     copy: "Mulmul, voile, hand-loom — pieces you keep returning to.",
     href: "/collections/kurtas",

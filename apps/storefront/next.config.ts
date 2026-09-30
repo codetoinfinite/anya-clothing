@@ -32,6 +32,9 @@ const config: NextConfig = {
     optimizePackageImports: ["lucide-react", "framer-motion"],
   },
   images: {
+    // Vercel services don't route /_next/image to the optimizer (it 404s), so serve images as-is.
+    // Site images are pre-sized files in public/images.
+    unoptimized: true,
     formats: ["image/avif", "image/webp"],
     deviceSizes: [360, 640, 768, 1024, 1280, 1536, 1920],
     imageSizes: [16, 32, 64, 96, 160, 256, 384],

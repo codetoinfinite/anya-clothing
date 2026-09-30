@@ -28,7 +28,7 @@ export default async function AboutPage() {
       </div>
       <div className="container-wide mt-16">
         <div className="aspect-[21/9] relative overflow-hidden bg-[var(--color-bg-alt)]">
-          <Image src="https://images.pexels.com/photos/8886965/pexels-photo-8886965.jpeg?auto=compress&cs=tinysrgb&w=2000" alt="Atelier" fill className="object-cover" sizes="100vw" priority />
+          <Image src="/images/pexels-8886965.jpg" alt="Atelier" fill className="object-cover" sizes="100vw" priority />
         </div>
       </div>
       {text ? (

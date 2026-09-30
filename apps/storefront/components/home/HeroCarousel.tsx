@@ -9,7 +9,7 @@ type Slide = { image: string; eyebrow: string; title: string; copy: string; ctaL
 
 const SLIDES: Slide[] = [
   {
-    image: "https://images.pexels.com/photos/8192360/pexels-photo-8192360.jpeg?auto=compress&cs=tinysrgb&w=1800",
+    image: "/images/pexels-8192360.jpg",
     eyebrow: "Spring · Summer · 26",
     title: "A new season of hand-loomed kurtas.",
     copy: "Made in limited runs across Jaipur, Lucknow, and Kolkata.",
@@ -17,7 +17,7 @@ const SLIDES: Slide[] = [
     ctaHref: "/collections/new-arrivals",
   },
   {
-    image: "https://images.pexels.com/photos/20736212/pexels-photo-20736212.jpeg?auto=compress&cs=tinysrgb&w=1800",
+    image: "/images/pexels-20736212.jpg",
     eyebrow: "Festive edit",
     title: "Quiet luxury, woven slowly.",
     copy: "Banarasi silks, mulmul, hand-block prints — pieces meant for re-wear.",
@@ -25,7 +25,7 @@ const SLIDES: Slide[] = [
     ctaHref: "/collections/festive",
   },
   {
-    image: "https://images.pexels.com/photos/34222609/pexels-photo-34222609.jpeg?auto=compress&cs=tinysrgb&w=1800",
+    image: "/images/pexels-34222609.jpg",
     eyebrow: "End of season",
     title: "Up to 60% off select silhouettes.",
     copy: "Quietly priced, never compromised.",

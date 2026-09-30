@@ -17,7 +17,7 @@ export const POSTS: BlogPost[] = [
     date: "2026-05-12",
     author: "Aanya Studio",
     tag: "Style",
-    cover: "https://images.pexels.com/photos/8819319/pexels-photo-8819319.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    cover: "/images/pexels-8819319.jpg",
     body: [
       "Festive dressing in 2026 is about quiet confidence — less ornament, more presence. Our atelier returned to four foundational silhouettes this season: the long anarkali, the straight kurta, the bandhgala set, and the wrap-front sharara.",
       "Pair an ivory chikankari kurta with handwoven silk palazzos for an early-morning puja, then swap into a sequin dupatta at dusk. Same kurta, two moods.",
@@ -31,7 +31,7 @@ export const POSTS: BlogPost[] = [
     date: "2026-04-28",
     author: "Aanya Atelier",
     tag: "Care",
-    cover: "https://images.pexels.com/photos/9339397/pexels-photo-9339397.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    cover: "/images/pexels-9339397.jpg",
     body: [
       "First wash: cold water, half a cap of mild liquid detergent, no soaking past 10 minutes. Vegetable dyes bleed in the first two washes — this is expected, not a defect.",
       "Always line-dry in shade. Direct sun bleaches indigos and madders quickest.",
@@ -45,7 +45,7 @@ export const POSTS: BlogPost[] = [
     date: "2026-04-10",
     author: "Meher Kapoor",
     tag: "Atelier",
-    cover: "https://images.pexels.com/photos/28389703/pexels-photo-28389703.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    cover: "/images/pexels-28389703.jpg",
     body: [
       "Bagru is a small town, 30 kilometres west of Jaipur, where block-printing has been practiced by the Chhipa community for over 300 years. The process is unhurried — and intentionally so.",
       "Each metre of fabric passes through eight hands before it reaches our cutting tables. The dyer, the printer, the washer, the sun-dryer — every craft is its own apprenticeship.",

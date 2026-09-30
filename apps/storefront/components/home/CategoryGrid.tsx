@@ -2,12 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 const CATS = [
-  { label: "Kurtas", href: "/collections/kurtas", image: "https://images.pexels.com/photos/28512776/pexels-photo-28512776.jpeg?auto=compress&cs=tinysrgb&w=900" },
-  { label: "Dresses", href: "/collections/dresses", image: "https://images.pexels.com/photos/34077588/pexels-photo-34077588.jpeg?auto=compress&cs=tinysrgb&w=900" },
-  { label: "Ethnic sets", href: "/collections/ethnic-sets", image: "https://images.pexels.com/photos/14100162/pexels-photo-14100162.jpeg?auto=compress&cs=tinysrgb&w=900" },
-  { label: "Co-ords", href: "/collections/co-ords", image: "https://images.pexels.com/photos/16397414/pexels-photo-16397414.jpeg?auto=compress&cs=tinysrgb&w=900" },
-  { label: "Bottom wear", href: "/collections/bottom-wear", image: "https://images.pexels.com/photos/30251753/pexels-photo-30251753.jpeg?auto=compress&cs=tinysrgb&w=900" },
-  { label: "Jewellery", href: "/collections/jewellery", image: "https://images.pexels.com/photos/33154729/pexels-photo-33154729.jpeg?auto=compress&cs=tinysrgb&w=900" },
+  { label: "Kurtas", href: "/collections/kurtas", image: "/images/pexels-28512776.jpg" },
+  { label: "Dresses", href: "/collections/dresses", image: "/images/pexels-34077588.jpg" },
+  { label: "Ethnic sets", href: "/collections/ethnic-sets", image: "/images/pexels-14100162.jpg" },
+  { label: "Co-ords", href: "/collections/co-ords", image: "/images/pexels-16397414.jpg" },
+  { label: "Bottom wear", href: "/collections/bottom-wear", image: "/images/pexels-30251753.jpg" },
+  { label: "Jewellery", href: "/collections/jewellery", image: "/images/pexels-33154729.jpg" },
 ];
 
 type CatItem = { label: string; href: string; image: string };
