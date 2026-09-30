@@ -105,8 +105,11 @@ export async function getCollectionByHandle(handle: string): Promise<Collection 
       fields: "+metadata",
     } as ListQuery)) as { collections: Collection[] };
     return collections[0] ?? null;
-  } catch {
-    return null;
+  } catch (e) {
+    // Backend unreachable/misconfigured: render an empty collection instead of a 404 so nav links still work.
+    if (process.env.NODE_ENV === "development") console.warn("[getCollectionByHandle]", (e as Error).message);
+    const title = handle.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+    return { id: "", handle, title };
   }
 }
 

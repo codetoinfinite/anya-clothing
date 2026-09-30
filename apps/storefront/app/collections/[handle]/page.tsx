@@ -37,12 +37,12 @@ export default async function CollectionPage({
   const offset = (page - 1) * PAGE_SIZE;
   const order = sp.sort && sp.sort !== "price" && sp.sort !== "-price" ? sp.sort : undefined;
 
-  const { products, count } = await listProducts({
+  const { products, count } = collection.id ? await listProducts({
     collection_id: collection.id,
     limit: PAGE_SIZE,
     offset,
     order,
-  });
+  }) : { products: [], count: 0 };
 
   let filtered = products;
   const sizes = sp.size?.split(",").filter(Boolean) ?? [];
@@ -117,7 +117,7 @@ export default async function CollectionPage({
           </div>
           {filtered.length === 0 ? (
             <div className="border border-[var(--color-line)] p-12 text-center text-sm text-[var(--color-ink-muted)]">
-              No products match these filters.
+              {sizes.length || colors.length || sp.instock ? "No products match these filters." : "New pieces are on their way. Check back soon."}
             </div>
           ) : (
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-10">
