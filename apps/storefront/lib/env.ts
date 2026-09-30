@@ -5,7 +5,8 @@ const schema = z.object({
   NEXT_PUBLIC_BRAND_NAME: z.string().min(1).default("Aanya"),
   NEXT_PUBLIC_BRAND_TAGLINE: z.string().default("Heritage. Reimagined."),
   NEXT_PUBLIC_MEDUSA_BACKEND_URL: z.string().url().default("http://localhost:9000"),
-  NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: z.string().min(1, "publishable key required"),
+  // Optional so the build succeeds before the backend exists; storefront renders empty until it is set.
+  NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: z.string().default(""),
   NEXT_PUBLIC_DEFAULT_REGION: z.string().min(1).default("in"),
   NEXT_PUBLIC_BASE_CURRENCY: z.string().min(1).default("inr"),
   NEXT_PUBLIC_GA4_ID: z.string().optional().default(""),
@@ -15,7 +16,9 @@ const schema = z.object({
 });
 
 const parsed = schema.safeParse({
-  NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+  NEXT_PUBLIC_SITE_URL:
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined),
   NEXT_PUBLIC_BRAND_NAME: process.env.NEXT_PUBLIC_BRAND_NAME,
   NEXT_PUBLIC_BRAND_TAGLINE: process.env.NEXT_PUBLIC_BRAND_TAGLINE,
   NEXT_PUBLIC_MEDUSA_BACKEND_URL: process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL,
@@ -34,6 +37,10 @@ if (!parsed.success) {
 }
 
 const e = parsed.data;
+
+if (!e.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY) {
+  console.warn("[env] NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY is not set; catalog requests to Medusa will fail.");
+}
 
 export const env = {
   siteUrl: e.NEXT_PUBLIC_SITE_URL,

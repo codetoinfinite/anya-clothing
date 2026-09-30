@@ -1,10 +1,11 @@
 import type { NextConfig } from "next";
 
-const medusaHost = (() => {
+const medusa = (() => {
   try {
-    return new URL(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL ?? "http://localhost:9000").hostname;
+    const u = new URL(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL ?? "http://localhost:9000");
+    return { protocol: u.protocol.replace(":", "") as "http" | "https", hostname: u.hostname };
   } catch {
-    return "localhost";
+    return { protocol: "http" as const, hostname: "localhost" };
   }
 })();
 
@@ -37,7 +38,7 @@ const config: NextConfig = {
     minimumCacheTTL: 60 * 60 * 24,
     remotePatterns: [
       { protocol: "http", hostname: "localhost" },
-      { protocol: "http", hostname: medusaHost },
+      medusa,
       { protocol: "https", hostname: "**.amazonaws.com" },
       { protocol: "https", hostname: "**.cloudfront.net" },
       { protocol: "https", hostname: "images.unsplash.com" },
