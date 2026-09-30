@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "admin": {
+      "root": "apps/admin",
+      "framework": "nextjs",
+      "bindings": [
+        { "type": "service", "service": "storefront", "format": "url", "env": "STOREFRONT_URL" }
+      ]
+    },
+    "storefront": {
+      "root": "apps/storefront",
+      "framework": "nextjs"
+    }
+  },
+  "rewrites": [
+    { "source": "/admin/:path*", "destination": { "service": "admin" } },
+    { "source": "/(.*)", "destination": { "service": "storefront" } }
+  ]
+}

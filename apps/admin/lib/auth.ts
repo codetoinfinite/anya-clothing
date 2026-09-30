@@ -21,14 +21,14 @@ export async function setToken(token: string): Promise<void> {
     secure: env.IS_PROD,
     sameSite: "lax",
     domain: env.COOKIE_DOMAIN,
-    path: "/",
+    path: "/admin",
     maxAge: 60 * 60 * 24,
   });
 }
 
 export async function clearToken(): Promise<void> {
   const c = await cookies();
-  c.delete(env.COOKIE_NAME);
+  c.delete({ name: env.COOKIE_NAME, path: "/admin" });
 }
 
 export async function signIn(email: string, password: string): Promise<{ ok: true } | { ok: false; error: string }> {

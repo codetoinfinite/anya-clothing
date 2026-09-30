@@ -40,7 +40,7 @@ export default async function ActivityPage({ searchParams }: { searchParams: Pro
   return (
     <div className="space-y-4">
       <PageHeader title="Activity log" subtitle={`${count.toLocaleString()} admin mutations`} />
-      <form className="card p-3 flex flex-wrap gap-3 items-end" action="/settings/activity">
+      <form className="card p-3 flex flex-wrap gap-3 items-end">
         <label className="text-sm">
           <div className="text-xs text-[var(--color-muted)] mb-1">Resource</div>
           <select name="resource_type" defaultValue={sp.resource_type ?? ""} className="input">

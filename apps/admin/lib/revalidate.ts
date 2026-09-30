@@ -1,15 +1,16 @@
 // Notifies the storefront to revalidate cached content after an admin mutation.
-// No-ops cleanly when STOREFRONT_REVALIDATE_URL / STOREFRONT_REVALIDATE_SECRET are not configured.
+// STOREFRONT_URL is injected by the Vercel service binding (see vercel.json); set it by hand only for
+// plain `pnpm dev` (e.g. http://localhost:3000). No-ops cleanly when it or REVALIDATE_SECRET is missing.
 
 export async function notifyStorefront(opts: { tags?: string[]; paths?: string[] }): Promise<void> {
-  const url = process.env.STOREFRONT_REVALIDATE_URL;
-  const secret = process.env.STOREFRONT_REVALIDATE_SECRET;
-  if (!url || !secret) return;
+  const base = process.env.STOREFRONT_URL;
+  const secret = process.env.REVALIDATE_SECRET;
+  if (!base || !secret) return;
   const tags = opts.tags ?? [];
   const paths = opts.paths ?? [];
   if (tags.length === 0 && paths.length === 0) return;
   try {
-    await fetch(url, {
+    await fetch(new URL("/api/revalidate", base), {
       method: "POST",
       headers: { "content-type": "application/json", "x-revalidate-secret": secret },
       body: JSON.stringify({ tags, paths }),
