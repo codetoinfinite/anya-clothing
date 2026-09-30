@@ -1,18 +1,24 @@
 import { redirect } from "next/navigation";
 import { signIn, getToken } from "@/lib/auth";
 
+// Same-origin paths only: "//host" and "/\\host" are protocol-relative and would redirect off-site.
+function safeFrom(v: unknown): string {
+  const s = typeof v === "string" ? v : "";
+  return s.startsWith("/") && !s.startsWith("//") && !s.startsWith("/\\") ? s : "/";
+}
+
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ from?: string; error?: string }> }) {
   const sp = await searchParams;
-  if (await getToken()) redirect(sp.from && sp.from.startsWith("/") ? sp.from : "/");
+  if (await getToken()) redirect(safeFrom(sp.from));
 
   async function action(formData: FormData) {
     "use server";
     const email = String(formData.get("email") ?? "");
     const password = String(formData.get("password") ?? "");
-    const from = String(formData.get("from") ?? "/");
+    const from = safeFrom(formData.get("from"));
     const r = await signIn(email, password);
     if (!r.ok) redirect(`/login?error=${encodeURIComponent(r.error)}${from ? `&from=${encodeURIComponent(from)}` : ""}`);
-    redirect(from.startsWith("/") ? from : "/");
+    redirect(from);
   }
 
   return (
@@ -33,7 +39,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           <label className="label block mb-1">Password</label>
           <input name="password" type="password" required autoComplete="current-password" className="input" />
         </div>
-        <input type="hidden" name="from" value={sp.from ?? "/"} />
+        <input type="hidden" name="from" value={safeFrom(sp.from)} />
         <button type="submit" className="btn btn-primary w-full">Sign in</button>
       </form>
     </main>

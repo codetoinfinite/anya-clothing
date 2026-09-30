@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { requireToken, clearToken } from "@/lib/auth";
+import { getToken, clearToken } from "@/lib/auth";
+import { RedirectToLogin } from "@/components/RedirectToLogin";
 import { getCurrentUser, canRead } from "@/lib/roles";
 import { redirect } from "next/navigation";
 
@@ -70,7 +71,7 @@ async function signOutAction() {
 }
 
 export default async function DashLayout({ children }: { children: React.ReactNode }) {
-  await requireToken();
+  if (!(await getToken())) return <RedirectToLogin />;
   const me = await getCurrentUser();
   const role = me?.role ?? "readonly";
   const visibleGroups = NAV
