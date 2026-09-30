@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { headers } from "next/headers";
 import { requireToken, clearToken } from "@/lib/auth";
 import { getCurrentUser, canRead } from "@/lib/roles";
 import { redirect } from "next/navigation";
@@ -74,9 +73,6 @@ export default async function DashLayout({ children }: { children: React.ReactNo
   await requireToken();
   const me = await getCurrentUser();
   const role = me?.role ?? "readonly";
-  const hdrs = await headers();
-  const pathname = hdrs.get("x-invoke-path") ?? hdrs.get("x-pathname") ?? "/";
-  if (!canRead(role, pathname)) redirect("/");
   const visibleGroups = NAV
     .map((g) => ({ ...g, items: g.items.filter((it) => canRead(role, it.href)) }))
     .filter((g) => g.items.length > 0);

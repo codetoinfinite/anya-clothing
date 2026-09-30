@@ -1,4 +1,6 @@
 import "server-only";
+import { cache } from "react";
+import { redirect } from "next/navigation";
 import { adminFetch } from "./medusa-admin";
 
 export type Role = "owner" | "editor" | "fulfillment" | "readonly";
@@ -42,7 +44,7 @@ export function isRole(v: unknown): v is Role {
   return typeof v === "string" && (ROLES as string[]).includes(v);
 }
 
-export async function getCurrentUser(): Promise<{ id: string; email: string; role: Role } | null> {
+export const getCurrentUser = cache(async (): Promise<{ id: string; email: string; role: Role } | null> => {
   try {
     const r = await adminFetch<{ user: { id: string; email: string; metadata?: any } }>("/admin/users/me");
     const meta = r.user?.metadata ?? {};
@@ -51,7 +53,7 @@ export async function getCurrentUser(): Promise<{ id: string; email: string; rol
   } catch {
     return null;
   }
-}
+});
 
 export function canRead(role: Role, pathname: string): boolean {
   const allowed = matchPrefix(SECTION_READ, pathname);
@@ -63,6 +65,13 @@ export function canWrite(role: Role, pathname: string): boolean {
   const allowed = matchPrefix(SECTION_WRITE, pathname);
   if (!allowed) return role !== "readonly";
   return allowed.includes(role);
+}
+
+// Called from each section's layout.tsx. Vercel services can't deploy Edge middleware, so section
+// access is enforced here instead of from a middleware-provided pathname.
+export async function requireRead(section: string): Promise<void> {
+  const me = await getCurrentUser();
+  if (!canRead(me?.role ?? "readonly", section)) redirect("/");
 }
 
 export const ALL_ROLES = ROLES;
