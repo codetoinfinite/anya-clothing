@@ -1,0 +1,44 @@
+import Image from "next/image";
+import Link from "next/link";
+
+const CATS = [
+  { label: "Kurtas", href: "/collections/kurtas", image: "https://images.pexels.com/photos/28512776/pexels-photo-28512776.jpeg?auto=compress&cs=tinysrgb&w=900" },
+  { label: "Dresses", href: "/collections/dresses", image: "https://images.pexels.com/photos/34077588/pexels-photo-34077588.jpeg?auto=compress&cs=tinysrgb&w=900" },
+  { label: "Ethnic sets", href: "/collections/ethnic-sets", image: "https://images.pexels.com/photos/14100162/pexels-photo-14100162.jpeg?auto=compress&cs=tinysrgb&w=900" },
+  { label: "Co-ords", href: "/collections/co-ords", image: "https://images.pexels.com/photos/16397414/pexels-photo-16397414.jpeg?auto=compress&cs=tinysrgb&w=900" },
+  { label: "Bottom wear", href: "/collections/bottom-wear", image: "https://images.pexels.com/photos/30251753/pexels-photo-30251753.jpeg?auto=compress&cs=tinysrgb&w=900" },
+  { label: "Jewellery", href: "/collections/jewellery", image: "https://images.pexels.com/photos/33154729/pexels-photo-33154729.jpeg?auto=compress&cs=tinysrgb&w=900" },
+];
+
+type CatItem = { label: string; href: string; image: string };
+
+export function CategoryGrid({ items, eyebrow = "Shop by category", title = "Find your silhouette." }: { items?: CatItem[]; eyebrow?: string; title?: string } = {}) {
+  const data = items && items.length > 0 ? items : CATS;
+  return (
+    <section className="container-wide py-16 md:py-24">
+      <div className="flex items-end justify-between mb-8">
+        <div>
+          <div className="eyebrow mb-2">{eyebrow}</div>
+          <h2 className="text-3xl md:text-4xl">{title}</h2>
+        </div>
+        <Link href="/collections" className="hidden md:inline link-underline text-sm">View all</Link>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-5">
+        {data.map((c) => (
+          <Link key={c.href} href={c.href} className="group block">
+            <div className="relative aspect-[3/4] overflow-hidden bg-[var(--color-bg-alt)]">
+              <Image
+                src={c.image}
+                alt={c.label}
+                fill
+                sizes="(min-width: 1024px) 16vw, (min-width: 768px) 33vw, 50vw"
+                className="object-cover transition-transform duration-[700ms] group-hover:scale-105"
+              />
+            </div>
+            <div className="mt-3 text-sm font-medium">{c.label}</div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}

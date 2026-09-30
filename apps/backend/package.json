@@ -1,0 +1,41 @@
+{
+  "name": "@byshree/backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Medusa.js v2 backend for byshree",
+  "license": "UNLICENSED",
+  "main": "index.js",
+  "scripts": {
+    "build": "medusa build",
+    "seed": "medusa exec ./src/scripts/seed.ts",
+    "start": "medusa start",
+    "dev": "medusa develop",
+    "migrate": "medusa db:migrate",
+    "db:create": "medusa db:create",
+    "user:create": "medusa user --email admin@byshree.local --password supersecret",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@medusajs/admin-sdk": "2.4.0",
+    "@medusajs/cli": "2.4.0",
+    "@medusajs/framework": "2.4.0",
+    "@medusajs/medusa": "2.4.0",
+    "@medusajs/payment-stripe": "2.4.0",
+    "@mikro-orm/core": "6.4.3",
+    "@mikro-orm/knex": "6.4.3",
+    "@mikro-orm/migrations": "6.4.3",
+    "@mikro-orm/postgresql": "6.4.3",
+    "awilix": "^8.0.1",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.9.2",
+    "@swc/jest": "^0.2.36",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
