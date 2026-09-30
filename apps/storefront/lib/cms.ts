@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { env } from "./env";
 
 export type BlogPost = {
@@ -47,6 +48,9 @@ export type HomeSlot = {
   enabled: boolean;
 };
 
+// Getters are wrapped in cache() so generateMetadata + page share one request per render. Next 15.0's fetch
+// dedupe otherwise leaves the duplicate call pending forever when the first one rejects (backend down),
+// which hangs `next build`.
 async function storeGet<T>(path: string, init: { revalidate?: number; tags?: string[] } = {}): Promise<T | null> {
   const url = `${env.medusaUrl}${path}`;
   try {
@@ -62,30 +66,30 @@ async function storeGet<T>(path: string, init: { revalidate?: number; tags?: str
   }
 }
 
-export async function getBlogPosts(limit = 50): Promise<BlogPost[]> {
+export const getBlogPosts = cache(async (limit = 50): Promise<BlogPost[]> => {
   const data = await storeGet<{ posts: BlogPost[] }>(`/store/blog?limit=${limit}`, { revalidate: 60, tags: ["blog"] });
   return data?.posts ?? [];
-}
+});
 
-export async function getBlogPost(slug: string): Promise<BlogPost | null> {
+export const getBlogPost = cache(async (slug: string): Promise<BlogPost | null> => {
   const data = await storeGet<{ post: BlogPost }>(`/store/blog/${slug}`, { revalidate: 60, tags: ["blog", `blog:${slug}`] });
   return data?.post ?? null;
-}
+});
 
-export async function getPage(slug: string): Promise<CmsPage | null> {
+export const getPage = cache(async (slug: string): Promise<CmsPage | null> => {
   const data = await storeGet<{ page: CmsPage }>(`/store/pages/${slug}`, { revalidate: 300, tags: ["pages", `page:${slug}`] });
   return data?.page ?? null;
-}
+});
 
-export async function getSiteSettings(): Promise<SiteSettings | null> {
+export const getSiteSettings = cache(async (): Promise<SiteSettings | null> => {
   const data = await storeGet<{ settings: SiteSettings }>(`/store/site-settings`, { revalidate: 300, tags: ["site-settings"] });
   return data?.settings ?? null;
-}
+});
 
-export async function getHomeSlots(): Promise<HomeSlot[]> {
+export const getHomeSlots = cache(async (): Promise<HomeSlot[]> => {
   const data = await storeGet<{ slots: HomeSlot[] }>(`/store/home-content`, { revalidate: 60, tags: ["home-slots"] });
   return (data?.slots ?? []).filter((s) => s.enabled).sort((a, b) => a.position - b.position);
-}
+});
 
 export function bodyToParagraphs(body: { text?: string } | null | undefined): string[] {
   const text = body?.text ?? "";
